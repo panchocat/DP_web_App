@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 
+
 colnec = ['MD','SPP','CAUDAL','MW']
 
 if "load" not in st.session_state:
