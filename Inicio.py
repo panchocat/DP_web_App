@@ -5,13 +5,14 @@ from streamlit_option_menu import option_menu
 # import plotly.graph_objects as go #Libreria que permite hacer grafica datos mas complejos o elaborados. Permite personalizar los gráficos.
 
 
+
 print('hola')
 # if "load" not in st.session_state:
 #      st.session_state.load = False
 
 # col1, col2 = st.columns([2,1])
 st.markdown('# DRILLING PRESSURE')
-st.markdown('## :blue[Drilling Pressure es una aplicación web que permite analizar la presión de perforación de pozos de crudo o gas mediante un gráfico interactivo o simular la presión de perforación :chart_with_upwards_trend:.]')
+st.markdown('## :blue[Drilling Pressure es una aplicación web que permite analizar la presión de perforación de pozos de crudo o gas mediante un gráfico interactivo o simular presiones de perforación :chart_with_upwards_trend:.]')
 
 # datos = col2.file_uploader('Carga tu archivo . xlsx de datos de perforación aquí :point_down:')
 # print('hola')
