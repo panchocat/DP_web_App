@@ -1,18 +1,61 @@
 import streamlit as st
-from streamlit_option_menu import option_menu
+
 # import pandas as pd
 # import xlwings as xw
 # import plotly.graph_objects as go #Libreria que permite hacer grafica datos mas complejos o elaborados. Permite personalizar los gráficos.
 
+about_page = st.Page(
+    page = 'pages/Inicio.py',
+    title='Inicio',
+    icon=':material/home:',
+    default=True
+)
+app_1_page = st.Page(
+    page = 'pages/DataSet.py',
+    title='1_._Cargar_DataSet_de_parámetros_de_perforación',
+    icon=':material/upload:'
+)
+app_2_page = st.Page(
+    page = 'pages/Input_Data.py',
+    title='2_._Datos_de_entrada_para_hidraulica',
+    icon=':material/input:'
+)
+app_3_page = st.Page(
+    page = 'pages/Pressure_Analysis.py',
+    title='3_._Análisis_de_presión_de_perforación',
+    icon=':material/play_arrow:'
+)
+app_4_page = st.Page(
+    page = 'pages/pressure_simulation.py',
+    title='4_._Simulación_de_presiones_de_perforación',
+    icon=':material/play_arrow:'
+)
+# --- navigation setup [without sections] ---
+# pg = st.navigation(pages=[about_page,app_1_page,app_2_page,app_3_page,app_4_page])
+pg = st.navigation(
+    {
+        'Info':[about_page],
+        'APP':[app_1_page,app_2_page,app_3_page,app_4_page]
+    }
+)
+
+# --- shared on all pages ---
+st.sidebar.text('Made by Joaquín Martínez')
+# --- run navigation ---
+pg.run()
 
 
-print('hola')
-# if "load" not in st.session_state:
-#      st.session_state.load = False
 
-# col1, col2 = st.columns([2,1])
-st.markdown('# DRILLING PRESSURE')
-st.markdown('## :blue[Drilling Pressure es una aplicación web que permite analizar la presión de perforación de pozos de crudo o gas mediante un gráfico interactivo o simular presiones de perforación :chart_with_upwards_trend:.]')
+
+
+
+# print('hola')
+# # if "load" not in st.session_state:
+# #      st.session_state.load = False
+
+# # col1, col2 = st.columns([2,1])
+# st.markdown('# DRILLING PRESSURE')
+# st.markdown('## :blue[Drilling Pressure es una aplicación web que permite analizar la presión de perforación de pozos de crudo o gas mediante un gráfico interactivo o simular presiones de perforación :chart_with_upwards_trend:.]')
 
 # datos = col2.file_uploader('Carga tu archivo . xlsx de datos de perforación aquí :point_down:')
 # print('hola')

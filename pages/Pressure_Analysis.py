@@ -13,8 +13,8 @@ if 'dfem' not in st.session_state:
 
 
 # df1.set_index("MD", inplace=True)
-
-st.markdown('### :blue[Si ya completó los pasos 1 y 2 de la aplicación, ahora podrá generar el gráfico de análisis de presión de operación]')
+# '<div style="text-align: justify;">Hello World!</div>', unsafe_allow_html=True
+st.markdown('#### :blue[<div style="text-align: justify;">Para generar el gráfico de análisis de presión de perforación primero debe completar los pasos 1 y 2 de la aplicación.]', unsafe_allow_html=True)
 with st.form('show'):
     st.markdown('Este gráfico le permitirá comparar la presión de perforación vs la presión teórica o simulada para identificar posibles presiones anómalas presentes durante la operación de perforación:')
     error = st.number_input(' Ingrese el porcentaje de error respecto a la presión teórica que desa visualizar en el grafico',value=None,placeholder="Type a number...")
