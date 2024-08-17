@@ -40,7 +40,7 @@ pg = st.navigation(
 # --- shared on all pages ---
 st.sidebar.text('Made by Joaquín Martínez')
 st.sidebar.image('assets/rig2.png',use_column_width=True)
-st.logo("assets/dp_logo1.png",icon_image="assets/dp_logo1.png")
+st.logo("assets/dp_logo1.png")
 
 # --- run navigation ---
 pg.run()
