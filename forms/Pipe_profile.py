@@ -16,8 +16,10 @@ def pipe_profile():
         # dfhp = pd.DataFrame(columns=hole_profile, index=range(5))
         st.session_state.dataframe2.loc[st.session_state.counter1] = [Name,Long,0,O_D,I_D]
         st.session_state.counter1 += 1
+        st.session_state.tfa=tfa
         st.session_state.dataframe2.dropna(inplace=True)
         st.dataframe(st.session_state.dataframe2, hide_index=True)
+        st.write(f'TFA = {st.session_state.tfa}')
         # st.dataframe(st.session_state.dataframe2, hide_index=True)
     if final:
         st.rerun()
