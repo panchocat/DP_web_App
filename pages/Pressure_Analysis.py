@@ -259,8 +259,8 @@ with st.form('show'):
             # print(dfem1[['Vol Anu(bbl)','Vel Anu(ft/min)']])
             print(loss_presure_total)
             df1.at[d,'SPPT'] = round(loss_presure_total)
-            df1.at[d,'SPPT5%+']  = df1.at[d,'SPPT']*error/100 + df1.at[d,'SPPT']
-            df1.at[d,'SPPT5%-']  = df1.at[d,'SPPT'] - df1.at[d,'SPPT']*error/100 
+            df1.at[d,'SPPTE%+']  = df1.at[d,'SPPT']*error/100 + df1.at[d,'SPPT']
+            df1.at[d,'SPPTE%-']  = df1.at[d,'SPPT'] - df1.at[d,'SPPT']*error/100 
         
         df1.reset_index(inplace=True)
         print(df1)
@@ -271,9 +271,9 @@ with st.form('show'):
 #---Código que crea el gráfico analisis de presión de perforación---        
         fig = go.Figure() #Crea el objeto figura.
         fig.add_trace(go.Scatter(x=df1.MD, y=df1['SPPT'],name = 'SPPT',mode='lines', line_color='indigo'))# Se agrega una linea a la figura, donde se le da un nombre a la linea y se personaliza
-        fig.add_trace(go.Scatter(x=df1.MD, y=df1['SPPT5%+'],name = 'SPPT5%+', line=dict(color='royalblue', width=4,dash='dash'),fill='tonexty'))
+        fig.add_trace(go.Scatter(x=df1.MD, y=df1['SPPTE%+'],name = 'SPPT5%+', line=dict(color='royalblue', width=4,dash='dash'),fill='tonexty'))
         fig.add_trace(go.Scatter(x=df1.MD, y=df1['SPPT'],name = 'SPPT',mode='lines', line_color='indigo',showlegend=False))
-        fig.add_trace(go.Scatter(x=df1.MD, y=df1['SPPT5%-'],name = 'SPPT5%-', line=dict(color='royalblue', width=4,dash='dash'),fill='tonexty'))
+        fig.add_trace(go.Scatter(x=df1.MD, y=df1['SPPTE%-'],name = 'SPPT5%-', line=dict(color='royalblue', width=4,dash='dash'),fill='tonexty'))
         fig.add_trace(go.Scatter(x=df1.MD, y=df1.SPP,name = 'SPP',mode='lines', line_color='green'))
         fig.update_layout(title='Análisis de presión de perforación', xaxis_title='Depth(ft)', yaxis_title='Presión(psi)',template='plotly_white')
         # fig.show() 
