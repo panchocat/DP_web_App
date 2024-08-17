@@ -44,7 +44,7 @@ def show_hole_profile_form():
 
 @st.dialog('Ingrese los componetes que tiene la sarta de perforacióndesde superficie a fondo:')
 def show_pipe_profile_form():
-    hole_profile()
+    pipe_profile()
     
 
 

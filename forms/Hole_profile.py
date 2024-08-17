@@ -4,7 +4,7 @@ import streamlit as st
 def hole_profile():
     
     # placeholder = st.empty()
-    with st.form('Cargar perfil del pozo', clear_on_submit=True):
+    with st.form('well_profile', clear_on_submit=True):
         st.markdown('Ingrese las secciones que tiene el pozo desde superficie a fondo:')
         Name = st.text_input("Nombre de la sección (ej. OH(open hole) or CSG(Casing)): ",value=None,placeholder=None)
         long = st.number_input("Longitud de la sección (ft): ",value=None,placeholder="Type a number...")
