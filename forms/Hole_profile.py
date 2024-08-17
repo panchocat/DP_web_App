@@ -12,7 +12,12 @@ def hole_profile():
         st.markdown("Si desea cargar mas información, escriba la información y oprima ¡Cargar información!. Si no desea cargar mas información prima ¡finalizar!.")
         cargar = st.form_submit_button('¡cargar infomación!')
         final = st.form_submit_button('¡Finalizar!')
+
         if cargar:
+            lista = [Name,long,Diam]
+            if None in lista:
+                st.warning(f"Debe ingresar toda la información del formulario antes de oprimir el botón ¡cargar infomación!: ")
+                st.stop()
             # hole_profile = ['Name','hole diameter(in)','Long(ft)']#crea listas con los nombres de las columnas que van a tener los dataframes.
             # dfhp = pd.DataFrame(columns=hole_profile, index=range(5))
             st.session_state.dataframe1.loc[st.session_state.counter] = [Name,long,Diam]
