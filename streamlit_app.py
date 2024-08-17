@@ -39,6 +39,7 @@ pg = st.navigation(
 
 # --- shared on all pages ---
 st.sidebar.text('Made by Joaquín Martínez')
+st.sidebar.image('assets/Imagen.jpg',use_column_width='auto')
 # --- run navigation ---
 pg.run()
 
