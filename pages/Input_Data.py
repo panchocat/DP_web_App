@@ -18,8 +18,8 @@ if 'dataframe1' not in st.session_state:
     st.session_state.dataframe1= pd.DataFrame(columns=['Name','Long(ft)','hole diameter(in)'], index=range(5))
 if 'dataframe2' not in st.session_state:
     st.session_state.dataframe2= pd.DataFrame(columns=['Name','Long(ft)','Hole Diame(in)','O.D Tub(in)','I.D Tub(in)'], index=range(10))
-# if 'tfa' not in st.session_state:
-#     st.session_state.tfa=0
+if 'tfa' not in st.session_state:
+    st.session_state.tfa=0
 # if 'mw' not in st.session_state:
 #     st.session_state.mw=0
 # if 'pv' not in st.session_state:
@@ -59,7 +59,8 @@ with st.expander("Visualizar Perfil del pozo"):
 if st.button('Formulario para perfil de la tuberia'):
     show_pipe_profile_form()
 with st.expander("Visualizar Perfil de la tuberia"):
-    st.dataframe(st.session_state.dataframe1, hide_index=True)
+    st.dataframe(st.session_state.dataframe2, hide_index=True)
+    st.write(f'TFA = {st.session_state.tfa}')
     st.markdown('###### Verifique la información que cargó, si hay algún error en esa información oprima el boton REINICIAR para cargar los datos nuevamente!!!')
     st.button('¡Limpiar formulario!', on_click=limpiar_cache)
 
