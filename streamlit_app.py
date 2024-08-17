@@ -1,32 +1,30 @@
 import streamlit as st
 
-# import pandas as pd
-# import xlwings as xw
-# import plotly.graph_objects as go #Libreria que permite hacer grafica datos mas complejos o elaborados. Permite personalizar los gráficos.
+
 
 about_page = st.Page(
-    page = 'pages/Inicio.py',
+    page = 'views/Inicio.py',
     title='Inicio',
     icon=':material/home:',
     default=True
 )
 app_1_page = st.Page(
-    page = 'pages/DataSet.py',
+    page = 'views/DataSet.py',
     title='1_._Cargar_DataSet_de_parámetros_de_perforación',
     icon=':material/upload:'
 )
 app_2_page = st.Page(
-    page = 'pages/Input_Data.py',
+    page = 'views/Input_Data.py',
     title='2_._Datos_de_entrada_para_hidraulica',
     icon=':material/input:'
 )
 app_3_page = st.Page(
-    page = 'pages/Pressure_Analysis.py',
+    page = 'views/Pressure_Analysis.py',
     title='3_._Análisis_de_presión_de_perforación',
     icon=':material/play_arrow:'
 )
 app_4_page = st.Page(
-    page = 'pages/pressure_simulation.py',
+    page = 'views/pressure_simulation.py',
     title='4_._Simulación_de_presiones_de_perforación',
     icon=':material/play_arrow:'
 )
