@@ -1,21 +1,10 @@
 import streamlit as st 
-import pandas as pd 
-# if "submit" not in st.session_state:
-#     st.session_state.submit = False
-# if 'counter' not in st.session_state:
-#     st.session_state.counter=0
-# if 'counter1' not in st.session_state:
-#     st.session_state.counter1=0
-# if 'dataframe1' not in st.session_state:
-#     st.session_state.dataframe1= pd.DataFrame(columns=['Name','Long(ft)','hole diameter(in)'], index=range(5))
-# if 'dataframe2' not in st.session_state:
-#     st.session_state.dataframe2= pd.DataFrame(columns=['Name','Long(ft)','Hole Diame(in)','O.D Tub(in)','I.D Tub(in)'], index=range(10))
 
-def profile():
+
+def hole_profile():
     
-
     # placeholder = st.empty()
-    with st.form('well_profile', clear_on_submit=True):
+    with st.form('Cargar perfil del pozo', clear_on_submit=True):
         st.markdown('Ingrese las secciones que tiene el pozo desde superficie a fondo:')
         Name = st.text_input("Nombre de la sección (ej. OH(open hole) or CSG(Casing)): ",value=None,placeholder=None)
         long = st.number_input("Longitud de la sección (ft): ",value=None,placeholder="Type a number...")

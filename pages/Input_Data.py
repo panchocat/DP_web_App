@@ -2,7 +2,8 @@
 import streamlit as st
 import pandas as pd
 
-from forms.profile import profile
+from forms.Hole_profile import hole_profile
+from forms.Pipe_profile import pipe_profile
 
 
 
@@ -38,18 +39,29 @@ def limpiar_cache():
 
 
 @st.dialog('Ingrese las secciones que tiene el pozo desde superficie a fondo:')
-def show_profile_form():
-    profile()
+def show_hole_profile_form():
+    hole_profile()
+
+@st.dialog('Ingrese los componetes que tiene la sarta de perforacióndesde superficie a fondo:')
+def show_pipe_profile_form():
+    hole_profile()
     
 
 
 st.markdown('#### :blue[<div style="text-align: justify;">Para realizar el análisis de presiones de perforación o simular presiónes de preforación, debe ingresar la información del estado mecánico del pozo que se perforó o se va a perforar:]', unsafe_allow_html=True)
-if st.button('Well Profile'):
-    show_profile_form()
-with st.expander("Perfil del pozo"):
+if st.button('Formulario para perfil del pozo'):
+    show_hole_profile_form()
+with st.expander("Visualizar Perfil del pozo"):
     st.dataframe(st.session_state.dataframe1, hide_index=True)
     st.markdown('###### Verifique la información que cargó, si hay algún error en esa información oprima el boton REINICIAR para cargar los datos nuevamente!!!')
-    st.button('¡REINICIAR!', on_click=limpiar_cache)
+    st.button('¡¡Limpiar formulario!!', on_click=limpiar_cache)
+
+if st.button('Formulario para perfil de la tuberia'):
+    show_pipe_profile_form()
+with st.expander("Visualizar Perfil de la tuberia"):
+    st.dataframe(st.session_state.dataframe1, hide_index=True)
+    st.markdown('###### Verifique la información que cargó, si hay algún error en esa información oprima el boton REINICIAR para cargar los datos nuevamente!!!')
+    st.button('¡Limpiar formulario!', on_click=limpiar_cache)
 
 
 # def limpiar_cache():
