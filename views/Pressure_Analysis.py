@@ -6,7 +6,7 @@ import plotly.graph_objects as go #Libreria que permite hacer gráfico mas compl
 
 # dfex = st.session_state.df
 if 'dfem' not in st.session_state:
-    st.session_state.dfem= pd.DataFrame(columns=['Vol Sarta(bbl)','Vol Anu(bbl)','Vel Anu(ft/min)','Vel Tub(ft/min)','Viscosidad eff(tubing)','Viscosidad eff(anular)','Reynolds (Anular)','Reynolds (tubing)','friction factor(tubing)','friction factor(anular)','loss press grad(tubing)','loss press grad(anular)','Vel Crit(ft/min)','Caud Crit(gpm)','Reg Flujo(anular)'], index=range(12))
+    st.session_state.dfem= pd.DataFrame(columns=['Vol Sarta(bbl)','Vol Anu(bbl)','Vel Anu(ft/min)','Vel Tub(ft/min)','Viscosidad eff(tubing)','Viscosidad eff(anular)','Reynolds (anular)','Reynolds (tubing)','friction factor(tubing)','friction factor(anular)','loss press grad(tubing)','loss press grad(anular)','Vel Crit(ft/min)','Caud Crit(gpm)','Reg Flujo(anular)'], index=range(12))
 # if 'df1' not in st.session_state:
 #     st.session_state.df1=pd.DataFrame()
 # st.session_state.df

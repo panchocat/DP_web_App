@@ -18,20 +18,13 @@ def hole_profile():
             if None in lista:
                 st.warning(f"Debe ingresar toda la información del formulario antes de oprimir el botón ¡cargar infomación!: ")
                 st.stop()
-            # hole_profile = ['Name','hole diameter(in)','Long(ft)']#crea listas con los nombres de las columnas que van a tener los dataframes.
-            # dfhp = pd.DataFrame(columns=hole_profile, index=range(5))
             st.session_state.dataframe1.loc[st.session_state.counter] = [Name,long,Diam]
             st.session_state.counter += 1
             st.session_state.dataframe1.dropna(inplace=True)
             st.dataframe(st.session_state.dataframe1, hide_index=True)
-            # st.rerun()
-            # st.dataframe(st.session_state.dataframe1, hide_index=True)
+
         if final:
-            # # dfhp = st.session_state.dataframe1
-            # # dfhp = dfhp.dropna()
-            # st.session_state.dataframe1.dropna(inplace=True)
             st.rerun()
-            # # placeholder.empty()
-            # # st.session_state.counter = st.session_state
+
             
  

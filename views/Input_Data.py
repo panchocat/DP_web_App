@@ -30,11 +30,14 @@ if 'tfa' not in st.session_state:
 #     st.session_state.t3=0
 # if 'q' not in st.session_state:
 #     st.session_state.q=0
-keys = ['counter','counter1','dataframe1','dataframe2']
-
+keys = ['counter','counter1','dataframe1']
+keys_0 = ['counter','counter1','dataframe2','tfa']
 def limpiar_cache():
     for key in keys:
         del st.session_state[key]
+def limpiar_cache_0():
+    for key in keys_0:
+        del st.session_state[key]      
 
 
 
@@ -62,7 +65,7 @@ with st.expander("Visualizar Perfil de la tuberia"):
     st.dataframe(st.session_state.dataframe2, hide_index=True)
     st.write(f'TFA = {st.session_state.tfa}')
     st.markdown('###### Verifique la información que cargó, si hay algún error en esa información oprima el boton REINICIAR para cargar los datos nuevamente!!!')
-    st.button('¡Limpiar formulario!', on_click=limpiar_cache)
+    st.button('¡Limpiar formulario!', on_click=limpiar_cache_0)
 
 
 # def limpiar_cache():
