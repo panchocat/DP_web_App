@@ -14,12 +14,14 @@ if 'dfem' not in st.session_state:
 
 # df1.set_index("MD", inplace=True)
 # '<div style="text-align: justify;">Hello World!</div>', unsafe_allow_html=True
-st.markdown('#### :blue[<div style="text-align: justify;">Para generar el gráfico de análisis de presión de perforación primero debe completar los pasos 1 y 2 de la aplicación.]', unsafe_allow_html=True)
+st.markdown('#### :blue[<div style="text-align: justify;">Esta opción generará un gráfico que compara la presión de perforación real vs la presión teórica de perforación para identificar posibles presiones anómalas que hubo durante la perforación. Para generar el gráfico de análisis de presión de perforación primero debe completar los pasos 1 y 2 de la aplicación.]', unsafe_allow_html=True)
 with st.form('show'):
-    st.markdown('Este gráfico le permitirá comparar la presión de perforación vs la presión teórica o simulada para identificar posibles presiones anómalas presentes durante la operación de perforación:')
-    error = st.number_input(' Ingrese el porcentaje de error respecto a la presión teórica que desa visualizar en el grafico',value=None,placeholder="Type a number...")
+    error = st.number_input(' Ingrese el porcentaje de error o ventana de error respecto a la presión teórica que desea visualizar en el grafico',value=None,placeholder="Type a number...")
     graficar = st.form_submit_button('¡Generar Gráfico!')
     if graficar:
+        if error == None:
+            st.warning(f"Debe ingresar el dato de 'porcentaje de error' antes de oprimir ¡Generar Gráfico!: ")
+            st.stop()
         df1 = st.session_state.df.copy(deep=True)
         dfl = len(st.session_state.df["MD"])# Calculamos y almacenamos el valor de la longitud de la serie HOLE DEPTH del df en la variable dfl.
         dmax = st.session_state.df["MD"].max()# almacenamos en una variable el valor minimo de la columna DEPTH.

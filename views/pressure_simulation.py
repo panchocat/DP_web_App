@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import plotly.graph_objects as go
 import math
 from forms.mud_data import mud_data
 from forms.pump_rate import pump_rate
@@ -74,7 +75,7 @@ def show_depth_form():
     depth()
 
 
-multi ='''##### :blue[Esta opción le permitira simular presiones de perforación para tener una idea de como puede ser el comportamiento de la presión durante la perforación y detectar posibles anomalias en este parámetro durante la operación.] 
+multi ='''##### :blue[Esta opción le permitira simular presiones de perforación para tener una idea de como puede ser el comportamiento de la presión de perforación durante la operación e identificar posibles anomalias en este parámetro.] 
 Para usar esta opción debe seguir estos pasos:  
 1- Completar la información solicitada en la opción (2) de esta aplicación.  
 2- Ingresar los siguientes Datos y luego oprimir el botón ¡generar presiones simuladas!.'''
@@ -504,10 +505,13 @@ if st.button('¡Generar presiones simuladas!'):
                             print(i)
                             diff = sum - hole_depth
                             dfpp1.at[i,'Long(ft)']=dfpp1.at[i,'Long(ft)']-diff
-                            if i-1 >= 0:
-                                dfpp1.drop([i-1], axis=0, inplace=True)
-                            print(dfpp1)
-                            break
+                            z = i-1
+                            if z >= 0:
+                                for q in range (z,-1,-1):
+                                    dfpp1.drop([q], axis=0, inplace=True)
+                                    dfpp1 = dfpp1.sort_index().reset_index(drop=True)
+                                print(dfpp1)
+                                break
                                 # dfpp1 = dfpp1.drop(index=[1])
                         cont += 1
             #---indica que el hueco tiene tiene dos secciones.---                   
@@ -578,7 +582,9 @@ if st.button('¡Generar presiones simuladas!'):
                         dfpp1.at[j,'Hole Diame(in)']=D_H2
                 dfem1 = pd.concat([dfpp1,st.session_state.dfem], axis=1)
                     # print(dfemf)
-
+               
+               
+               
                 def vol_tub (O_D,I_D,Length):
                     if O_D is None:
                         volumen = round((I_D*I_D)*0.0009714*Length,1)
@@ -586,42 +592,43 @@ if st.button('¡Generar presiones simuladas!'):
                         volumen = round((O_D*O_D - I_D*I_D)*0.0009714*Length,1)
                     return volumen
 
-                def vel_anu (Q,OD_S,O_D):
-                    va = round(0.408*Q/(OD_S**2-O_D**2)*60,1)
-                    return va
                 def vel_tub (I_D):
-                    vt = round((0.408*Q)/I_D**2,1)
+                    vt = round((Q*0.408)/I_D**2,0)
                     return vt
+                def vel_anu (Q,OD_S,O_D):
+                    va = round((Q*0.408)/(OD_S**2-O_D**2),0)
+                    return va
 
                 def vis_ef_tub (vt,I_D):
-                    vet = 100*Kt*(96*vt/I_D)**(Nt-1)
+                    vet = round(100*Kt*(96*vt/I_D)**(Nt-1),0)
                     return vet
                 def vis_ef_anu (va,OD_S,O_D):
-                    vea = 100*Ka*(144*(va/60)/(OD_S-O_D))**(Na-1)
+                    vea = round(100*Ka*(144*(va)/(OD_S-O_D))**(Na-1),0)
                     return vea
 
                 def reynolds_tub (vt,I_D,vet):
-                    rt = round((928*vt*I_D*mw)/(vet*((3*Nt+1)/(4*Nt))**Nt),1)
+                    rt = round((928*vt*I_D*mw)/(vet*((3*Nt+1)/(4*Nt))**Nt),0)
                     return rt
                 def reynolds_anu (va,OD_S,O_D,vea):
-                    ra = round(928*va/60*(OD_S-O_D)*mw/(vea*(((2*Na)+1)/(3*Na))**Na),1)
+                    ra = round((928*va*(OD_S-O_D)*mw)/(vea*(((2*Na)+1)/(3*Na))**Na),1)
                     return ra
 
                 def factor_fric_tub (rt):
                     if rt < (3470-1370*Nt):
                         fft = 16/rt
-                    if rt <= (4207-1370*Nt):
+                    elif rt < (4270-1370*Nt):
                         fft = (((rt-(3470-1370*Nt))/800)*(((math.log10(Nt)+3.93)/50)/(4270-1370*Nt)**((1.75-math.log10(Nt))/7))-(16/(3470-1370*Nt))+16/(3470-1370*Nt))
                     else:
                         fft = ((math.log10(Nt)+3.93)/50)/(rt**((1.75-math.log10(Nt))/7))
                     return fft
                 def factor_fric_anu (rfa,ra):
-                    if rfa == "LAM":
-                        ffa = round(24/ra,3)
-                    elif rfa == "TRANS":
-                        ffa = round(((ra-(3470-1370*Na))/800)*((math.log10(Na)+3.93)/50/(4270-1370*Na)**((1.75-math.log10(Na))/7)-(24/(3470-1370*Na)))+(24/(3470-1370*Na)),3)
+                    if ra < (3470-1370*Na):
+                        ffa = round(24/ra,2)
+                    elif ra < (4270-1370*Na):
+                        round(((ra-(3470-1370*Na))/800)*((math.log10(Na)+3.93)/50/(4270-1370*Na)**((1.75-math.log10(Na))/7)-(24/(3470-1370*Na)))+(24/(3470-1370*Na)),2)
+                        ffa = round(((ra-(3470-1370*Na))/800)*((math.log10(Na)+3.93)/50/(4270-1370*Na)**((1.75-math.log10(Na))/7)-(24/(3470-1370*Na)))+(24/(3470-1370*Na)),2)
                     else:
-                        ffa = round(((math.log10(Na)+3.93)/50)/(ra**((1.75-math.log10(Na))/7)),3)
+                        ffa = round(((math.log10(Na)+3.93)/50)/(ra**((1.75-math.log10(Na))/7)),2)
                     return ffa
 
 
@@ -639,42 +646,46 @@ if st.button('¡Generar presiones simuladas!'):
 
 
                 def loss_press_grad_tub (fft,vt,I_D,sl):
-                    lpgt = (fft*vt**2*mw)/(25.81*I_D)*sl
+                    lpgt = round(((fft*vt**2*mw)/(25.81*I_D))*sl,0)
                     return lpgt
                 def loss_press_grad_anu (ffa,va,OD_S,O_D,sl):
-                    lpga = (ffa*(va/60)**2*mw/(25.81*(OD_S-O_D)))*sl
+                    lpga = round((ffa*(va)**2*mw/(25.81*(OD_S-O_D)))*sl,0)
                     return lpga
 
                 # --se Calcula el valor de la constante n y k para el anular y la tuberia--
-                Na = round(0.5*math.log10((pv+yp)/t3),3)
-                Ka = round(5.11*(pv+yp)/511**Na,3)
-                Nt = round(3.32*math.log10((2*pv+yp)/(pv+yp)),3)
-                Kt = round(5.11*(2*(pv+yp)-yp)/1022**Nt,3)
+                Na = round(0.5*math.log10((pv+yp)/t3),2)
+                Ka = round((5.11*(pv+yp))/511**Na,2)
+                Nt = round(3.32*math.log10((2*pv+yp)/(pv+yp)),2)
+                Kt = round((5.11*(2*(pv+yp)-yp))/1022**Nt,2)
 
 
-    #                 # Q = 206
-                        #--Bloque de codigo que completa los datos indirectos del dfem que permite calcular la caida de presión del sistema--
+                    # Q = 206
+# --- Bloque de codigo que completa los datos indirectos del dfem1 que permite calcular las perdidas de presion del sistema ---
                 for i in range(10):
                     dfem1.at[i,'Vol Sarta(bbl)'] = vol_tub(None,dfem1.at[i,'I.D Tub(in)'],dfem1.at[i,'Long(ft)'])
                     dfem1.at[i,'Vol Anu(bbl)'] = vol_tub(dfem1.at[i,'Hole Diame(in)'],dfem1.at[i,'O.D Tub(in)'],dfem1.at[i,'Long(ft)'])
                     dfem1.at[i,'Vel Anu(ft/min)'] = vel_anu(Q,dfem1.at[i,'Hole Diame(in)'],dfem1.at[i,'O.D Tub(in)'])
-                    dfem1.at[i,'Vel Tub(ft/min)'] = vel_tub(dfem1.at[i,'I.D Tub(in)'])
-                    dfem1.at[i,'Viscosidad eff(tubing)']  = vis_ef_tub(dfem1.at[i,'Vel Tub(ft/min)'],dfem1.at[i,'I.D Tub(in)'])
+                    dfem1.at[i,'Vel Tub(ft/seg)'] = vel_tub(dfem1.at[i,'I.D Tub(in)'])
+                    dfem1.at[i,'Viscosidad eff(tubing)']  = vis_ef_tub(dfem1.at[i,'Vel Tub(ft/seg)'],dfem1.at[i,'I.D Tub(in)'])
                     dfem1.at[i,'Viscosidad eff(anular)']  = vis_ef_anu(dfem1.at[i,'Vel Anu(ft/min)'],dfem1.at[i,'Hole Diame(in)'],dfem1.at[i,'O.D Tub(in)'])
-                    dfem1.at[i,'Reynolds (tubing)'] = reynolds_tub(dfem1.at[i,'Vel Tub(ft/min)'],dfem1.at[i,'I.D Tub(in)'],dfem1.at[i,'Viscosidad eff(tubing)'])
+                    dfem1.at[i,'Reynolds (tubing)'] = reynolds_tub(dfem1.at[i,'Vel Tub(ft/seg)'],dfem1.at[i,'I.D Tub(in)'],dfem1.at[i,'Viscosidad eff(tubing)'])
                     dfem1.at[i,'Reynolds (anular)'] = reynolds_anu(dfem1.at[i,'Vel Anu(ft/min)'],dfem1.at[i,'Hole Diame(in)'],dfem1.at[i,'O.D Tub(in)'],dfem1.at[i,'Viscosidad eff(anular)'])
                     dfem1.at[i,'friction factor(tubing)'] = factor_fric_tub(dfem1.at[i,'Reynolds (tubing)'])
                     dfem1.at[i,'Reg Flujo(anular)'] = Reg_Flujo_anular(dfem1.at[i,'Reynolds (anular)'])
                     dfem1.at[i,'friction factor(anular)'] = factor_fric_anu(dfem1.at[i,'Reg Flujo(anular)'],dfem1.at[i,'Reynolds (anular)'])
-                    dfem1.at[i,'loss press grad(tubing)'] = loss_press_grad_tub(dfem1.at[i,'friction factor(tubing)'],dfem1.at[i,'Vel Tub(ft/min)'],dfem1.at[i,'I.D Tub(in)'],dfem1.at[i,'Long(ft)'])
+                    dfem1.at[i,'loss press grad(tubing)'] = loss_press_grad_tub(dfem1.at[i,'friction factor(tubing)'],dfem1.at[i,'Vel Tub(ft/seg)'],dfem1.at[i,'I.D Tub(in)'],dfem1.at[i,'Long(ft)'])
                     dfem1.at[i,'loss press grad(anular)'] = loss_press_grad_anu(dfem1.at[i,'friction factor(anular)'],dfem1.at[i,'Vel Anu(ft/min)'],dfem1.at[i,'Hole Diame(in)'],dfem1.at[i,'O.D Tub(in)'],dfem1.at[i,'Long(ft)'])
-
         # ---calcula la caida de presión en la tuberia---
+
                 loss_presure_tubing = round(dfem1['loss press grad(tubing)'].sum())
                 loss_presure_anular = round(dfem1['loss press grad(anular)'].sum())
                 # boquillas = tfa*1303.8
-                loss_presure_bit = (mw*Q**2)/(18511.7*(tfa**2))
-                loss_presure_total = loss_presure_tubing+loss_presure_anular+loss_presure_bit
+                # loss_presure_bit = 156*mw*Q**2/boquillas**2
+                loss_presure_bit = (mw*Q**2)/(10858*(tfa**2))
+                if loss_presure_tubing+loss_presure_anular == 0:
+                    loss_presure_total = 0
+                else:
+                    loss_presure_total = loss_presure_tubing+loss_presure_anular+loss_presure_bit
                 # print(dfem1[['Vol Anu(bbl)','Vel Anu(ft/min)']])
                 print(loss_presure_total)
                 df_lista.loc[contador4] = v,round(loss_presure_total),0,0,0
@@ -691,14 +702,12 @@ if st.button('¡Generar presiones simuladas!'):
                 st.dataframe(df_lista,hide_index=True)
         contador3 += 1
             
-    # #---Código que crea el gráfico analisis de presión de perforación---        
-    #         fig = go.Figure() #Crea el objeto figura.
-    #         fig.add_trace(go.Scatter(x=df1.MD, y=df1['SPPT'],name = 'SPPT',mode='lines', line_color='indigo'))# Se agrega una linea a la figura, donde se le da un nombre a la linea y se personaliza
-    #         fig.add_trace(go.Scatter(x=df1.MD, y=df1['SPPTE%+'],name = 'SPPT5%+', line=dict(color='royalblue', width=4,dash='dash'),fill='tonexty'))
-    #         fig.add_trace(go.Scatter(x=df1.MD, y=df1['SPPT'],name = 'SPPT',mode='lines', line_color='indigo',showlegend=False))
-    #         fig.add_trace(go.Scatter(x=df1.MD, y=df1['SPPTE%-'],name = 'SPPT5%-', line=dict(color='royalblue', width=4,dash='dash'),fill='tonexty'))
-    #         fig.add_trace(go.Scatter(x=df1.MD, y=df1.SPP,name = 'SPP',mode='lines', line_color='green'))
-    #         fig.update_layout(title='Análisis de presión de perforación', xaxis_title='Depth(ft)', yaxis_title='Presión(psi)',template='plotly_white')
-    #         # fig.show() 
-            
-    #         st.plotly_chart(fig)
+#---Código que crea el gráfico analisis de presión de perforación---        
+        fig = go.Figure() #Crea el objeto figura.
+        fig.add_trace(go.Scatter(x=st.session_state.df2['Depth(ft)'], y=st.session_state.df2['SPPT(psi)'],name = f'Caudal: {st.session_state.lista_q[0]}',mode='lines', line_color='green'))# Se agrega una linea a la figura, donde se le da un nombre a la linea y se personaliza
+        fig.add_trace(go.Scatter(x=st.session_state.df3['Depth(ft)'], y=st.session_state.df3['SPPT(psi)'],name = f'Caudal: {st.session_state.lista_q[1]}', mode='lines', line_color='white'))
+        fig.add_trace(go.Scatter(x=st.session_state.df4['Depth(ft)'], y=st.session_state.df4['SPPT(psi)'],name = f'Caudal: {st.session_state.lista_q[2]}', mode='lines', line_color='yellow'))
+        fig.update_layout(title='Presión de perforación simuladas', xaxis_title='Depth(ft)', yaxis_title='Presión(psi)',template='plotly_white')
+    # fig.show() 
+
+    st.plotly_chart(fig)

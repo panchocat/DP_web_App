@@ -12,8 +12,8 @@ if "df" not in st.session_state:
 # if "datos" not in st.session_state:
 #      st.session_state.datos = 0
 
-st.markdown('# DRILLING PRESSURE')
-st.markdown('## Carga tu archivo de datos de perforación .xlsx aquí :point_down:')
+st.markdown('## :blue[DRILLING PRESSURE]')
+st.markdown('#### :blue[Carga tu Dataset de datos de perforación en formato .xlsx aquí] :point_down:')
 datos = st.file_uploader(f'Los parámetros de perforación necesarios que debe tener el archivo de datos para genarar el análisis y gráfico son: :red[{colnec}].')
 
 # datos = col2.file_uploader('Carga tu archivo . xlsx de datos de perforación aquí :point_down:')

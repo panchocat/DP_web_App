@@ -10,7 +10,7 @@ def depth():
         final4 = st.form_submit_button('¡Finalizar!')
         if cargar4:
             if d1 == None:
-                st.warning(f"Debe ingresar el dato de 'Profundidad inicial (ft)' antes de oprimir el botón ¡cargar infomación!: ")
+                st.warning(f"Debe ingresar el dato de 'Profundidad inicial (ft)' antes de oprimir ¡cargar infomación!: ")
                 st.stop()
             st.session_state.d1 = int(d1)
             st.session_state.d2 = int(d2)
