@@ -32,67 +32,79 @@ if datos is not None:
         coldf.append(i)
     #print(coldf)
 
-    # Función que verifica si un dato está en una lista.
-    def check (ncol, list):
-        if ncol in list:
-            return True
-        else:
-            return False
+# -- Lista con la información que debe tener el Dataset para poder analizarla y generar el grafico.--
+    colnec = ['MD','SPP','CAUDAL','MW','PV','YP','T3']
 
-    # Lista con la información que debe tener la data para poder analizarla y generar el grafico.
-    colnec = ['MD','SPP','CAUDAL','MW']
-    conta = 0 
 
-    # def main():
-       
-    #     placeholder = st.empty()
-    #     with placeholder.form('cargar'):
-    #         st.markdown('El archivo de datos no contiene el parametro "MW", ingrese esa información:')
-    #         mw = st.number_input("Ingrese el valor del peso del lodo (MW): ")
-    #         mdin = int(st.number_input(f"Ingrese el valor de profundidad donde empieza este peso de lodo (El valor debe estar en este rango: {mdmin} y {mdmax}) : "))
-    #         mdfi = int(st.number_input(f"Ingrese el valor de profundidad donde finaliza este peso de lodo (El valor debe estar en este rango: {mdmin} y {mdmax}) : "))
-    #         st.markdown("Si quiere cargar mas información de peso de lodo (MW), escriba la información y oprima ¡Cargar información!. Si no desea cargar mas información marque la casilla finalizar y prima el boton!!! ")
-    #         checkbox_val = st.checkbox("Finalizar!!!")
-    #         load = st.form_submit_button('¡cargar infomación!')
-    #         # st.dataframe(df,hide_index=True)
-    #     if load or st.session_state.load:
-    #     # if load:
-    #         st.session_state.load = True
-    #         com1 = mdin >= mdmin
-    #         com2 = mdin <= mdmax
-    #         com3 = mdfi <= mdmax
-    #         com4 = mdfi >= mdmin
-    #         if com1 & com2 == False:
-    #             st.warning(f"Ingrese el valor de profundidad donde empieza este peso de lodo (El valor debe estar en este rango: {mdmin} y {mdmax}) : ")
-    #             print(load)
-    #             st.stop()
-    #         if com3 & com4 == False:
-    #             st.warning(f"Ingrese el valor de profundidad donde finaliza este peso de lodo (El valor debe estar en este rango: {mdmin} y {mdmax}) : ")
-    #             print(load)
-    #             st.stop()
-    #         st.session_state.df.set_index("MD", inplace=True)# cambiamos el indice del df que se generó por defecto en pandas por uno presonalizado que en este caso va a ser "DEPTH"
-    #         for i in range (mdin,mdfi+1):# iteración que permite guardar en el df los datos solicitados anteriormente.
-    #             st.session_state.df.at[i,'MW'] = mw # Almacena en una celda especifica del df el dato mw.
-    #         if checkbox_val:
-    #             placeholder.empty()
-    #             # st.markdown('La información se registró correctamente, desea registrar más información (Y/N):')
-            
-    #         # st.dataframe(df,hide_index=True)
-        
-    #     return [mw,mdin,mdfi,load,checkbox_val]
+    def check_values (lista,lista_preestablecida):
+        not_values = [] 
+        for i in lista_preestablecida:
+            if i is not lista:
+                not_values.append(i)
+        return not_values
     
-    for j in colnec:
-        conta +=1
-        eval1 = j != "MW"
-        eval2 = check(j,coldf) == False
-        # consulta = check(i,coldf)
-        # if consulta == False:
-        if eval2: #& eval1: # estructura de control que indica si el df no contiene la información necesaria.
-            # print(f'El dataframe no contiene los datos de {j}, por favor revise los datos de origen y vuelva a correr el programa.')
-            # break
-            st.markdown(f':warning: El archivo de datos no contiene el parametro {j}, por favor revise el archivo de datos y vuelva a cargarlo.')
-            st.markdown(f'Recuerde que Los parámetros de perforación necesarios que debe tener el DATASET para poder genarar el análisis y gráfico son: :red[{colnec}].')
-            break
+    len_lista = len(check_values(coldf,colnec))
+    
+    if len_lista > 1:
+        st.write(f'El Dataset no contiene el o los parametros: :red[{check_values(coldf,colnec)}], Revise el dataset y cárguelo nuevamente:')
+    else:
+        st.write('El Dataset contiene los parámetros necesarios :thumbsup:.')
+
+
+
+
+    # conta = 0 
+
+    # # def main():
+       
+    # #     placeholder = st.empty()
+    # #     with placeholder.form('cargar'):
+    # #         st.markdown('El archivo de datos no contiene el parametro "MW", ingrese esa información:')
+    # #         mw = st.number_input("Ingrese el valor del peso del lodo (MW): ")
+    # #         mdin = int(st.number_input(f"Ingrese el valor de profundidad donde empieza este peso de lodo (El valor debe estar en este rango: {mdmin} y {mdmax}) : "))
+    # #         mdfi = int(st.number_input(f"Ingrese el valor de profundidad donde finaliza este peso de lodo (El valor debe estar en este rango: {mdmin} y {mdmax}) : "))
+    # #         st.markdown("Si quiere cargar mas información de peso de lodo (MW), escriba la información y oprima ¡Cargar información!. Si no desea cargar mas información marque la casilla finalizar y prima el boton!!! ")
+    # #         checkbox_val = st.checkbox("Finalizar!!!")
+    # #         load = st.form_submit_button('¡cargar infomación!')
+    # #         # st.dataframe(df,hide_index=True)
+    # #     if load or st.session_state.load:
+    # #     # if load:
+    # #         st.session_state.load = True
+    # #         com1 = mdin >= mdmin
+    # #         com2 = mdin <= mdmax
+    # #         com3 = mdfi <= mdmax
+    # #         com4 = mdfi >= mdmin
+    # #         if com1 & com2 == False:
+    # #             st.warning(f"Ingrese el valor de profundidad donde empieza este peso de lodo (El valor debe estar en este rango: {mdmin} y {mdmax}) : ")
+    # #             print(load)
+    # #             st.stop()
+    # #         if com3 & com4 == False:
+    # #             st.warning(f"Ingrese el valor de profundidad donde finaliza este peso de lodo (El valor debe estar en este rango: {mdmin} y {mdmax}) : ")
+    # #             print(load)
+    # #             st.stop()
+    # #         st.session_state.df.set_index("MD", inplace=True)# cambiamos el indice del df que se generó por defecto en pandas por uno presonalizado que en este caso va a ser "DEPTH"
+    # #         for i in range (mdin,mdfi+1):# iteración que permite guardar en el df los datos solicitados anteriormente.
+    # #             st.session_state.df.at[i,'MW'] = mw # Almacena en una celda especifica del df el dato mw.
+    # #         if checkbox_val:
+    # #             placeholder.empty()
+    # #             # st.markdown('La información se registró correctamente, desea registrar más información (Y/N):')
+            
+    # #         # st.dataframe(df,hide_index=True)
+        
+    # #     return [mw,mdin,mdfi,load,checkbox_val]
+    
+    # for j in colnec:
+    #     conta +=1
+    #     eval1 = j != "MW"
+    #     eval2 = check(j,coldf) == False
+    #     # consulta = check(i,coldf)
+    #     # if consulta == False:
+    #     if eval2: #& eval1: # estructura de control que indica si el df no contiene la información necesaria.
+    #         # print(f'El dataframe no contiene los datos de {j}, por favor revise los datos de origen y vuelva a correr el programa.')
+    #         # break
+    #         st.markdown(f':warning: El archivo de datos no contiene el parametro {j}, por favor revise el archivo de datos y vuelva a cargarlo.')
+    #         st.markdown(f'Recuerde que Los parámetros de perforación necesarios que debe tener el DATASET para poder genarar el análisis y gráfico son: :red[{colnec}].')
+    #         break
         
         # if check(j,coldf) == False: # Si el df no tiene la información del parámetro "MW", lo informa y solicita que ingrese esa información.
         #         # col1.markdown('El archivo de datos no contiene el parametro "MW", ingrese esa información:')
@@ -110,18 +122,7 @@ if datos is not None:
         #             st.markdown('Gracias por cargar la información, a continuación se analizará los datos y se generará el gráfico!!')
         #             st.session_state.df.reset_index(inplace=True)
 
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+             
                     
                     
                     
