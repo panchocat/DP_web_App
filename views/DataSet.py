@@ -1,9 +1,9 @@
+# -- Bibliotecas---
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 
 
-colnec = ['MD','SPP','CAUDAL','MW']
 
 if "load" not in st.session_state:
      st.session_state.load = False
@@ -12,6 +12,11 @@ if "df" not in st.session_state:
 # if "datos" not in st.session_state:
 #      st.session_state.datos = 0
 
+# -- Lista con la información que debe tener el Dataset para poder analizarlo y generar el grafico.--
+colnec = ['MD','SPP','CAUDAL','MW','PV','YP','T3']
+
+
+# --- cargar dataset------------
 st.markdown('## :blue[DRILLING PRESSURE]')
 st.markdown('#### :blue[Carga tu Dataset de datos de perforación en formato .xlsx aquí] :point_down:')
 datos = st.file_uploader(f'Los parámetros de perforación necesarios que debe tener el archivo de datos para genarar el análisis y gráfico son: :red[{colnec}].')
@@ -19,6 +24,8 @@ datos = st.file_uploader(f'Los parámetros de perforación necesarios que debe t
 # datos = col2.file_uploader('Carga tu archivo . xlsx de datos de perforación aquí :point_down:')
 # print('hola')
 
+
+# --- Si hay un dataset cargado, se ejecuta el codigo del condicional, este condicional se pone con el fin de evitar error en el programa cunado el codigo pide información del dataset y este no se ha cargado ---
 if datos is not None:
     st.session_state.df = pd.read_excel(datos)
     # st.dataframe(df,hide_index=True)
@@ -32,8 +39,6 @@ if datos is not None:
         coldf.append(i)
     #print(coldf)
 
-# -- Lista con la información que debe tener el Dataset para poder analizarla y generar el grafico.--
-    colnec = ['MD','SPP','CAUDAL','MW','PV','YP','T3']
 
 
     def check_values (lista,lista_preestablecida):
@@ -46,7 +51,7 @@ if datos is not None:
     len_lista = len(check_values(coldf,colnec))
     
     if len_lista > 1:
-        st.write(f'El Dataset no contiene el o los parametros: :red[{check_values(coldf,colnec)}], Revise el dataset y cárguelo nuevamente:')
+        st.write(f'El Dataset no contiene el o los parametros: :red[{check_values(coldf,colnec)}], Revise el Dataset y cárguelo nuevamente:')
     else:
         st.write('El Dataset contiene los parámetros necesarios :thumbsup:.')
 

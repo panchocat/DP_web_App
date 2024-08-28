@@ -20,6 +20,8 @@ if 'q2' not in st.session_state:
     st.session_state.q2=0
 if 'q3' not in st.session_state:
     st.session_state.q3=0
+if 'cb' not in st.session_state:
+    st.session_state.cb = 0
 if 'd1' not in st.session_state:
     st.session_state.d1=0
 if 'd2' not in st.session_state:
@@ -192,7 +194,7 @@ with st.expander("Visualizar datos pronfundidas"):
 
 # st.markdown('###### Verifique la información que cargó en cada formulario, si hay algún error en esa información oprima el boton REINICIAR para cargar los datos nuevamente!!!')
 
-# -- Función que elimina vañores None de una lista --
+# -- Función que elimina valores None de una lista --
 def clear_list (a):
     while True:
         if None in a:
@@ -688,7 +690,9 @@ if st.button('¡Generar presiones simuladas!'):
                     loss_presure_total = loss_presure_tubing+loss_presure_anular+loss_presure_bit
                 # print(dfem1[['Vol Anu(bbl)','Vel Anu(ft/min)']])
                 print(loss_presure_total)
-                df_lista.loc[contador4] = v,round(loss_presure_total),0,0,0
+                stk_bajando = st.session_state.cb/dfem1['Vol Sarta(bbl)'].sum()
+                stk_subiendo = st.session_state.cb/dfem1['Vol Anu(bbl)'].sum()
+                df_lista.loc[contador4] = v,round(loss_presure_total),0,stk_bajando,stk_subiendo
                 df_lista.dropna(inplace=True)
                 # st.session_state.df2.reset_index(inplace=True)
                 # df1.at[d,'SPPTE%+']  = df1.at[d,'SPPT']*error/100 + df1.at[d,'SPPT']

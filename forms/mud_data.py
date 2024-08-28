@@ -4,12 +4,13 @@ import streamlit as st
 def mud_data():
     with st.form('mud', clear_on_submit=True):
         st.markdown('Ingrese la información en el formulario y luego oprima el boton cargar información:')
-        mw1 = st.number_input("Peso de lodo MW (ppg): ",value=None,placeholder="Type a number...")
-        pv1 = st.number_input("Viscosidad plastica PV (cp): ",value=None,placeholder="Type a number...")
-        yp1 = st.number_input("Yield point YP (lbf/100ft**2): ",value=None,placeholder="Type a number...")
-        t31 = st.number_input("Reologia TETA 3: ",value=None,placeholder="Type a number...")
+        mw1 = st.number_input("Peso de lodo MW (ppg) :red[*]: ",value=None,placeholder="Type a number...")
+        pv1 = st.number_input("Viscosidad plastica PV (cp) :red[*]: ",value=None,placeholder="Type a number...")
+        yp1 = st.number_input("Yield point YP (lbf/100ft**2) :red[*]: ",value=None,placeholder="Type a number...")
+        t31 = st.number_input("Reologia TETA 3 :red[*]:",value=None,placeholder="Type a number...")
         cargar2 = st.form_submit_button('¡cargar infomación!')
         final2 = st.form_submit_button('¡Finalizar!')
+        st.markdown(":red[*] Campo obligatorio.")
         if cargar2:
             lista = [mw1,pv1,yp1,t31]
             if None in lista:

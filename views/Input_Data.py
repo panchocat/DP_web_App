@@ -41,11 +41,11 @@ def limpiar_cache_0():
 
 
 
-@st.dialog('Ingrese las secciones que tiene el pozo desde superficie a fondo:')
+@st.dialog('Perfil del pozo:')
 def show_hole_profile_form():
     hole_profile()
 
-@st.dialog('Ingrese los componetes que tiene la sarta de perforacióndesde superficie a fondo:')
+@st.dialog('Perfil de la tuberia')
 def show_pipe_profile_form():
     pipe_profile()
     

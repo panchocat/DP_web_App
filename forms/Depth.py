@@ -3,11 +3,12 @@ import streamlit as st
 def depth():
     with st.form('profundidades', clear_on_submit=True):
         st.markdown('Puede simular la presión de perforación para una profundidad puntual o para un rango de profundidad:')
-        d1 = st.number_input("Profundidad inicial (ft): ",value=None,placeholder="Type a number...")
+        d1 = st.number_input("Profundidad inicial (ft) :red[*]: ",value=None,placeholder="Type a number...")
         d2 = st.number_input("Profundidad final (ft): ",placeholder="Type a number...")
         step = st.number_input("Pasos (generar presión de perforación cada 1 ft, 10ft etc...) (ft): ",placeholder="Type a number...")
         cargar4 = st.form_submit_button('¡cargar infomación!')
         final4 = st.form_submit_button('¡Finalizar!')
+        st.markdown(":red[*] Campo obligatorio.")
         if cargar4:
             if d1 == None:
                 st.warning(f"Debe ingresar el dato de 'Profundidad inicial (ft)' antes de oprimir ¡cargar infomación!: ")
