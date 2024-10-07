@@ -9,7 +9,7 @@ from forms.Pipe_profile import pipe_profile
 
 
 
-# -- bloque de codigo que Crea variables que no se borran cada vez que corrre el programa usando el metodo session_state --
+# -------------- Settings -----------------------------
 if 'counter' not in st.session_state:
     st.session_state.counter=0
 if 'counter1' not in st.session_state:
@@ -32,6 +32,9 @@ if 'tfa' not in st.session_state:
 #     st.session_state.q=0
 keys = ['counter','counter1','dataframe1']
 keys_0 = ['counter','counter1','dataframe2','tfa']
+#--------------------------------------------------
+
+
 def limpiar_cache():
     for key in keys:
         del st.session_state[key]
@@ -51,20 +54,20 @@ def show_pipe_profile_form():
     
 
 
-st.markdown('#### :blue[<div style="text-align: justify;">Para realizar el análisis de presiones de perforación o simular presiónes de preforación, debe ingresar la información del estado mecánico del pozo que se perforó o se va a perforar:]', unsafe_allow_html=True)
-if st.button('Formulario para perfil del pozo'):
+st.markdown('#### :blue[<div style="text-align: justify;">Para realizar análisis de presiones de perforación o simular presiónes de preforación, debe ingresar el estado mecánico del pozo (Perfil del pozo y perfil de la tuberia) que se perforó o se va a perforar:]', unsafe_allow_html=True)
+if st.button('Cargar perfil del pozo'):
     show_hole_profile_form()
 with st.expander("Visualizar Perfil del pozo"):
     st.dataframe(st.session_state.dataframe1, hide_index=True)
-    st.markdown('###### Verifique la información que cargó, si hay algún error en esa información oprima el boton REINICIAR para cargar los datos nuevamente!!!')
+    st.markdown('###### Verifique la información que cargó, si hay algún error en esa información haga click en el boton REINICIAR para cargar los datos nuevamente!!!')
     st.button('¡¡Limpiar formulario!!', on_click=limpiar_cache)
 
-if st.button('Formulario para perfil de la tuberia'):
+if st.button('Cargar perfil de la tuberia'):
     show_pipe_profile_form()
 with st.expander("Visualizar Perfil de la tuberia"):
     st.dataframe(st.session_state.dataframe2, hide_index=True)
     st.write(f'TFA = {st.session_state.tfa}')
-    st.markdown('###### Verifique la información que cargó, si hay algún error en esa información oprima el boton REINICIAR para cargar los datos nuevamente!!!')
+    st.markdown('###### Verifique la información que cargó, si hay algún error en esa información haga click en el boton REINICIAR para cargar los datos nuevamente!!!')
     st.button('¡Limpiar formulario!', on_click=limpiar_cache_0)
 
 

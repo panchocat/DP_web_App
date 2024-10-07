@@ -71,8 +71,7 @@ with st.form('show'):
 
 
     #----indica que la tuberia está dentro del casing o es una sola sección.----
-            if com3:
-                    
+            if com3:    
                 cont = 0
                 sum = 0
                 D_H = st.session_state.dataframe1.at[0,'hole diameter(in)']

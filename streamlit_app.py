@@ -41,6 +41,7 @@ pg = st.navigation(
 )
 
 # --- shared on all pages ---
+st.set_page_config(page_title='Drilling Pressure', page_icon=':chart_with_upwards_trend:')
 st.sidebar.text('Made by Joaquín Martínez')
 st.sidebar.image('assets/rig2.png',use_column_width=True)
 st.logo("assets/dp_logo1.png")
