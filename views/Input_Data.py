@@ -54,12 +54,12 @@ def show_pipe_profile_form():
     
 
 
-st.markdown('#### :blue[<div style="text-align: justify;">Para realizar análisis de presiones de perforación o simular presiónes de preforación, debe ingresar el estado mecánico del pozo (Perfil del pozo y perfil de la tuberia) que se perforó o se va a perforar:]', unsafe_allow_html=True)
+st.markdown('#### :blue[<div style="text-align: justify;">Para realizar el análisis de presion de perforación o simular presiónes de preforación, debe ingresar el estado mecánico del pozo (Perfil del pozo y perfil de la tuberia) que se perforó o se va a perforar:]', unsafe_allow_html=True)
 if st.button('Cargar perfil del pozo'):
     show_hole_profile_form()
 with st.expander("Visualizar Perfil del pozo"):
     st.dataframe(st.session_state.dataframe1, hide_index=True)
-    st.markdown('###### Verifique la información que cargó, si hay algún error en esa información haga click en el boton REINICIAR para cargar los datos nuevamente!!!')
+    st.markdown('###### Verifique la información que cargó, si hay algún error, haga click en el boton REINICIAR para cargar los datos nuevamente!!!')
     st.button('¡¡Limpiar formulario!!', on_click=limpiar_cache)
 
 if st.button('Cargar perfil de la tuberia'):
