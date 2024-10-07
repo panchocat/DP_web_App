@@ -10,7 +10,7 @@ def hole_profile():
         long = st.number_input("Longitud de la sección (ft) :red[*]: ",value=None,placeholder="Type a number...")
         diam = st.number_input("Diametro de la sección (in) :red[*]: ",value=None,placeholder="Type a number...")
         cargar = st.form_submit_button('¡cargar infomación!')
-        st.markdown("Si no desea cargar mas información prima ¡finalizar!.")
+#        st.markdown("Si no desea cargar mas información prima ¡finalizar!.")
         final = st.form_submit_button('¡Finalizar!')
         # st.markdown(":red[*] Información obligatorio.")
 
@@ -23,7 +23,7 @@ def hole_profile():
             st.session_state.counter += 1
             st.session_state.dataframe1.dropna(inplace=True)
             st.dataframe(st.session_state.dataframe1, hide_index=True)
-            st.success('Data saved!, Si desea cargar mas información, llene los campos y oprima ¡Cargar información!.')
+            st.success('Data saved!, Si desea cargar mas información, llene los campos y oprima ¡Cargar información!, de lo contrario oprima ¡Finalizar!.')
 
         if final:
             st.rerun()
